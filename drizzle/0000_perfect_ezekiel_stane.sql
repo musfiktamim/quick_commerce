@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS "Users" (
 	CONSTRAINT "Users_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "Products" (
+CREATE TABLE IF NOT EXISTS "products" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" varchar(100) NOT NULL,
 	"image" text,
@@ -21,3 +21,12 @@ CREATE TABLE IF NOT EXISTS "Products" (
 	"updated_at" timestamp DEFAULT CURRENT_TIMESTAMP,
 	"created_at" timestamp DEFAULT CURRENT_TIMESTAMP
 );
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "warehouses" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"name" varchar(100) NOT NULL,
+	"pincode" varchar(6) NOT NULL,
+	CONSTRAINT "warehouses_pincode_unique" UNIQUE("pincode")
+);
+--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "pincode_idx" ON "warehouses" USING btree ("pincode");
