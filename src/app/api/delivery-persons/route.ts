@@ -1,9 +1,20 @@
 import { db } from "@/lib/db/db";
-import { deliveryPerson } from "@/lib/db/schema";
+import { deliveryPerson, warehouses } from "@/lib/db/schema";
 import { deliveryPersonss } from "@/lib/validators/deliveryPersonss";
+import { desc, eq } from "drizzle-orm";
 
 export async function GET(req:Request) {
-    return Response.json({"message":"OK"},{status:200}) 
+    try {
+        const deliveryP = await db.select({
+            id:deliveryPerson.id,
+            name:deliveryPerson.name,
+            phone:deliveryPerson.phone,
+            warehouse:warehouses.name
+        }).from(deliveryPerson).leftJoin(warehouses,eq(deliveryPerson.id,warehouses.id)).orderBy(desc(deliveryPerson.id))
+        return Response.json(deliveryP,{status:200}) 
+    } catch (error) {
+        return Response.json({"message":error.message})
+    }
 }
 
 export async function POST(req:Request) {
@@ -14,7 +25,7 @@ export async function POST(req:Request) {
         validatedData = deliveryPersonss.parse({
             name:data.name,
             phone:data.phone,
-            warehouse_id:data.warehouse_id
+            warehouseId:data.warehouseId
         })
     } catch (error) {
         return Response.json({message:error.message},{status:400})
