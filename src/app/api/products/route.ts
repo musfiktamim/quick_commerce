@@ -1,14 +1,21 @@
 import { db } from "@/lib/db/db";
 import { products } from "@/lib/db/schema";
 import { productSchema } from "@/lib/validators/productSchema";
+import { desc } from "drizzle-orm";
 import { writeFile } from "node:fs";
 import path from "node:path";
 
 export async function GET(req: Request) {
-    return Response.json({"message":"hello"})
+    
+    try{
+        const allProducts = await db.select().from(products).orderBy(desc(products.id));
+        return Response.json(allProducts)
+    }catch(err){
+        return Response.json({message:err.message},{status:500})
+    }
 }
 export async function POST(req: Request){
-    // todo user autho rize
+    // todo user authorize
     const data = await req.formData();
     let validatedData;
     try {
