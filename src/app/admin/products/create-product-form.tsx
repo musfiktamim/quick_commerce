@@ -104,7 +104,7 @@ function CreateProductForm({onSubmit,disabled}:{onSubmit:(formvalus:FormValues)=
           />
 
 
-          <Button type="submit" className='w-full'>
+          <Button disabled={disabled} type="submit" className='w-full'>
             {disabled? <Loader2 className='size-4 animate-spin' />:'Create'}
           </Button>
         </form>
