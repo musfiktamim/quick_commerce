@@ -4,3 +4,10 @@ export interface Product{
     image:string,
     price:number
 }
+
+
+export interface Warehouse{
+    id:number,
+    name:string,
+    pincode:string
+}
