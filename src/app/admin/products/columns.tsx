@@ -14,10 +14,6 @@ export const columns:ColumnDef<Product>[] = [
         header:"Price"
     },
     {
-        accessorKey:"",
-        header:"name"
-    },
-    {
         id:"actions",
         header:"Action",
         cell:({row})=>{
