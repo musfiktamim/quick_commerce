@@ -19,7 +19,7 @@ function Productsheet() {
   const {isOpen,onClose} = useNewPeroduct()
   const queryClient = useQueryClient()
 
-  const {mutate} = useMutation({
+  const {mutate,isPending} = useMutation({
     mutationKey:['create-product'],
     mutationFn:(data:FormData)=>createProduct(data),
     onSuccess:()=>{
@@ -48,7 +48,7 @@ function Productsheet() {
         Create new Product
       </SheetDescription>
     </SheetHeader>
-    <CreateProductForm onSubmit={onSubmit} />
+    <CreateProductForm disabled={isPending} onSubmit={onSubmit} />
   </SheetContent>
 </Sheet>
 
